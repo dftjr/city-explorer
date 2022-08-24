@@ -24,13 +24,14 @@ This app allows the user of the site to enter a location in the United States an
 8-22-2022 1:30am - Application is now setup to run React, Axios, and Bootstrap. Starting build, site under construction.
 
 8-22-2022 5:00pm - LocationIQ connected to API. 
+
 8-23-2022 8:00pm - Cards created. Maps displaying
+
 8-24-2022 10:00am - Displaying data from API. Error code message updated.
 
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
-
 
 # Time Estimates
 For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
