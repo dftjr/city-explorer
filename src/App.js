@@ -1,5 +1,5 @@
 import React from 'react';
-import FormSubmit from '../src/Form/Form';
+import FormSubmit from './Form.js';
 
 class App extends React.Component {
 
