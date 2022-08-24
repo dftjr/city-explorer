@@ -11,7 +11,6 @@ class FormSubmit extends React.Component {
         this.state = {
             city: '',
             apiData: [],
-            map: ''
         };
     }
 
@@ -47,9 +46,7 @@ class FormSubmit extends React.Component {
                     </Button>
                 </Form>
                 <br/>
-                <div>
-                    <CardCity apiData={this.state.apiData} />
-                </div>
+                <CardCity apiData={this.state.apiData}/>
             </main>
         );
     }

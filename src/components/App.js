@@ -1,14 +1,15 @@
 import React from 'react';
 import FormSubmit from './Form.js';
+import  '../styles/App.css';
 
 class App extends React.Component {
 
   render() {
     return (
-      <body>
-        <p>Website is working!</p>
+      <div class='display'>
+        <h1>Website is working!</h1>
         <FormSubmit />
-      </body>
+      </div>
     );
   }
 }
