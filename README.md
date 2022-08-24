@@ -22,6 +22,7 @@ This app allows the user of the site to enter a location in the United States an
 
 01-01-2021 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
 8-22-2022 1:30am - Application is now setup to run React, Axios, and Bootstrap. Starting build, site under construction.
+
 8-22-2022 5:00pm - LocationIQ connected to API. 
 8-23-2022 8:00pm - Cards created. Maps displaying
 8-24-2022 10:00am - Displaying data from API. Error code message updated.
