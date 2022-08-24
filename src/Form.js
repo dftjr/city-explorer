@@ -2,55 +2,55 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import CardCity from './Card.js';
 
 class FormSubmit extends React.Component {
 
     constructor(props) {
         super();
         this.state = {
-            apiData: '',
-            city: ''
+            city: '',
+            apiData: [],
+            map: ''
         };
-    }
-
-    handleApiGrab = async (e) => {
-        e.preventDefault();
-        let response = await axios.get();
-        this.setState({
-            apiData: response.data.results
-        });
     }
 
     handleCityInput = (e) => {
         let city = e.target.value;
-        console.log(city);
+        console.log(this.state.city);
         this.setState({
-            city: '',
-            apiData: ''
+            city: city,
         });
     }
 
     handleCitySubmit = async (e) => {
         e.preventDefault();
         let response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`);
-        console.log(response.data);
         this.setState({
             apiData: response.data
         });
     }
 
     render() {
-        console.log(this.state.city);
+
         return (
-            <>
+            <main>
                 <Form onSubmit={this.handleCitySubmit}>
-                    <label>Pick a city:
-                        <input type="text"
-                            onInput={this.handleCityInput}
-                        <Button type="submit"</Button>
-                </label>
-            </Form>
-            </>
+                    <label>Pick a city:</label>
+                    <br/>
+                    <input type="text"
+                        onInput={this.handleCityInput}
+                        input="city"
+                    />
+                    <Button
+                        type="submit">Explore!
+                    </Button>
+                </Form>
+                <br/>
+                <div>
+                    <CardCity apiData={this.state.apiData} />
+                </div>
+            </main>
         );
     }
 }
