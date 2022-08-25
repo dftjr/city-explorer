@@ -12,7 +12,10 @@ class FormSubmit extends React.Component {
             city: '',
             apiData: [],
             error: false,
-            errorMessage: ''
+            errorMessage: '',
+            weatherArr: '',
+            lat: '',
+            long: ''
         };
     }
 
@@ -42,13 +45,30 @@ class FormSubmit extends React.Component {
 
     }
 
+    handleWeatherSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            let url = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`);
+            this.setState({
+                weatherArr: url.data,
+                error: false
+            });
+        } catch (error) {
+            console.log('error', error);
+            this.setState({
+                error: true,
+                errorMessage: `An Error Occurred: ${error.response.status}`
+            });
+        }
+
+    }
     
 
 render() {
 
     return (
         <main>
-            <Form onSubmit={this.handleCitySubmit}>
+            <Form onSubmit={this.handleCitySubmit() & (submitFunc=this.handleWeatherSubmit())}>
                 <label>Pick a city:</label>
                 <br />
                 <input type="text"
@@ -69,7 +89,7 @@ render() {
                         <CardCity apiData={this.state.apiData} />
                     </div>
             }
-        </main>
+        </main>,
     );
 }
 }
