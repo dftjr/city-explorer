@@ -2,20 +2,21 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import CardCity from './Card.js';
+import Map from './Map.js';
+import Weather from './Weather.js';
 
 class FormSubmit extends React.Component {
 
     constructor(props) {
-        super();
+        super(props);
         this.state = {
-            city: '',
-            apiData: [],
             error: false,
             errorMessage: '',
-            weatherArr: '',
+            apiCityData: [],
+            apiWeatherData: [],
+            city: '',
             lat: '',
-            long: ''
+            lon: ''
         };
     }
 
@@ -27,71 +28,84 @@ class FormSubmit extends React.Component {
         });
     }
 
-    handleCitySubmit = async (e) => {
+
+    handleMultipleMethods = (e) => {
         e.preventDefault();
+        this.handleWeatherSubmit();
+        this.handleCitySubmit();
+    }
+
+    handleCitySubmit = async () => {
         try {
             let response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`);
+            console.log(response);
             this.setState({
-                apiData: response.data,
+                apiCityData: response.data,
                 error: false
             });
+            console.log('City API data', response.data);
         } catch (error) {
-            console.log('error', error);
             this.setState({
                 error: true,
                 errorMessage: `An Error Occurred: ${error.response.status}`
             });
         }
-
     }
 
-    handleWeatherSubmit = async (e) => {
-        e.preventDefault();
+    handleWeatherSubmit = async () => {
         try {
-            let url = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`);
+            let response = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`);
+            console.log(response);
             this.setState({
-                weatherArr: url.data,
+                apiWeatherData: response.data.forecastArr,
                 error: false
             });
+            console.log('Weather API data', response.data.forecastArr)
         } catch (error) {
-            console.log('error', error);
             this.setState({
-                error: true,
+                props: true,
                 errorMessage: `An Error Occurred: ${error.response.status}`
             });
         }
-
     }
-    
 
-render() {
+    render() {
 
-    return (
-        <main>
-            <Form onSubmit={this.handleCitySubmit() & (submitFunc=this.handleWeatherSubmit())}>
-                <label>Pick a city:</label>
+        return (
+            <main>
+                <Form onSubmit={this.handleMultipleMethods}>
+                    <label>Pick a city:</label>
+                    <br />
+                    <input type="text"
+                        onInput={this.handleCityInput}
+                        input="city"
+                    />
+                    <Button
+                        type="submit">Explore!
+                    </Button>
+                </Form>
                 <br />
-                <input type="text"
-                    onInput={this.handleCityInput}
-                    input="city"
-                />
-                <Button
-                    type="submit">Explore!
-                </Button>
-            </Form>
-            <br />
-            {
-                this.state.error
-                    ?
-                    <p>{this.state.errorMessage}</p>
-                    :
-                    <div id="cardDisply">
-                        <CardCity apiData={this.state.apiData} />
+                {this.state.error ? <p>{this.state.errorMessage}</p> :
+                    
+                    <div id="weatherDisplay">
+                        <h1>WEATHER</h1>
+                        <Weather apiWeatherData={this.state.apiWeatherData}
+                        />
+                        <br/>
                     </div>
-            }
-        </main>,
-    );
-}
+                }
+                {this.state.error ? <p>{this.state.errorMessage}</p> :
+                    <div id="mapCard">
+                        <h1>CITIES</h1>
+                        <Map apiCityData={this.state.apiCityData}
+                        />
+                    </div>
+                }
+
+            </main>
+
+        )
+    }
 }
 
 export default FormSubmit;
