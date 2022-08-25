@@ -11,6 +11,8 @@ class FormSubmit extends React.Component {
         this.state = {
             city: '',
             apiData: [],
+            error: false,
+            errorMessage: ''
         };
     }
 
@@ -24,32 +26,52 @@ class FormSubmit extends React.Component {
 
     handleCitySubmit = async (e) => {
         e.preventDefault();
-        let response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`);
-        this.setState({
-            apiData: response.data
-        });
+        try {
+            let response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`);
+            this.setState({
+                apiData: response.data,
+                error: false
+            });
+        } catch (error) {
+            console.log('error', error);
+            this.setState({
+                error: true,
+                errorMessage: `An Error Occurred: ${error.response.status}`
+            });
+        }
+
     }
 
-    render() {
+    
 
-        return (
-            <main>
-                <Form onSubmit={this.handleCitySubmit}>
-                    <label>Pick a city:</label>
-                    <br/>
-                    <input type="text"
-                        onInput={this.handleCityInput}
-                        input="city"
-                    />
-                    <Button
-                        type="submit">Explore!
-                    </Button>
-                </Form>
-                <br/>
-                <CardCity apiData={this.state.apiData}/>
-            </main>
-        );
-    }
+render() {
+
+    return (
+        <main>
+            <Form onSubmit={this.handleCitySubmit}>
+                <label>Pick a city:</label>
+                <br />
+                <input type="text"
+                    onInput={this.handleCityInput}
+                    input="city"
+                />
+                <Button
+                    type="submit">Explore!
+                </Button>
+            </Form>
+            <br />
+            {
+                this.state.error
+                    ?
+                    <p>{this.state.errorMessage}</p>
+                    :
+                    <div id="cardDisply">
+                        <CardCity apiData={this.state.apiData} />
+                    </div>
+            }
+        </main>
+    );
+}
 }
 
 export default FormSubmit;
