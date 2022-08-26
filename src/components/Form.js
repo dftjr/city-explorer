@@ -14,6 +14,7 @@ class FormSubmit extends React.Component {
             errorMessage: '',
             apiCityData: [],
             apiWeatherData: [],
+            map: '',
             city: '',
             lat: '',
             lon: ''
@@ -38,9 +39,10 @@ class FormSubmit extends React.Component {
     handleCitySubmit = async () => {
         try {
             let response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`);
-            console.log(response);
+            console.log(response.data.map(data => data.lat));
             this.setState({
                 apiCityData: response.data,
+                map: (`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${response.data.lat},${response.data.lon}&zoom=12`),
                 error: false
             });
             console.log('City API data', response.data);
@@ -54,7 +56,7 @@ class FormSubmit extends React.Component {
 
     handleWeatherSubmit = async () => {
         try {
-            let response = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`);
+            let response = await axios.get(`${process.env.REACT_APP_SERVER}/weather?latQuery=${this.state.lat}&lonQuery=${this.state.lon}&key=${process.env.REACT_APP_WEATHER_API_KEY}`);
             console.log(response);
             this.setState({
                 apiWeatherData: response.data.forecastArr,
