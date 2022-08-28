@@ -2,11 +2,11 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import '../styles/Card.css';
 
-class Movies extends React.Component {
+class Movie extends React.Component {
 
     render() {
 
-        let displayMovies = this.props.apiMovieData.map((data, idx) => {
+        let displayMovie = this.props.apiMovieData.map((data, idx) => {
             return (
                 <Card key={idx}>
                     <Card.Body>
@@ -23,9 +23,9 @@ class Movies extends React.Component {
         });
 
         return (
-            <div id='movieCard' > {displayMovies}</div>
+            <div id='movieCard' > {displayMovie}</div>
         );
     }
 }
 
-export default Movies;
+export default Movie;
