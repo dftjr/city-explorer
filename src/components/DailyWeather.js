@@ -2,11 +2,11 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import '../styles/Card.css';
 
-class Weather extends React.Component {
+class DailyWeather extends React.Component {
 
   render() {
 
-    let displayWeather = this.props.apiWeatherData.map((data, idx) => {
+    let dailyWeatherCard = this.props.apiWeatherData.map((data, idx) => {
       return (
         <Card key={idx}>
           <Card.Body>
@@ -18,9 +18,9 @@ class Weather extends React.Component {
     });
 
     return (
-      <div id='weatherCard' > {displayWeather}</div>
+      <div id='weatherCard' > {dailyWeatherCard}</div>
     );
   }
 }
 
-export default Weather;
+export default DailyWeather;
