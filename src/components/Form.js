@@ -43,14 +43,15 @@ class FormSubmit extends React.Component {
             });
 
             // Get weather
-            let responseWeather = await axios.get(`${process.env.REACT_APP_SERVER}/weather?latQuery=${response.data[0].lat}&lonQuery=${response.data[0].lon}`);
+            let responseWeather = await axios.get(`${process.env.REACT_APP_SERVER}/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}`);
+            console.log(responseWeather.data);
             this.setState({
-                apiWeatherData: responseWeather.data.forecastArr,
+                apiWeatherData: responseWeather.data,
                 error: false
             });
 
             // Get movies
-            let responseMovies = await axios.get(`${process.env.REACT_APP_SERVER}/movies?cityQuery=${this.state.city}`);
+            let responseMovies = await axios.get(`${process.env.REACT_APP_SERVER}/movies?city=${this.state.city}`);
             this.setState({
                 apiMovieData: responseMovies.data.moviesArr,
                 error: false
