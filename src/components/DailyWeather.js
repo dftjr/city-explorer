@@ -10,8 +10,8 @@ class DailyWeather extends React.Component {
       return (
         <Card key={idx}>
           <Card.Body>
-            <Card.Text>Description: {data.description}</Card.Text>
-            <Card.Text>Date: {data.date}</Card.Text>
+            <Card.Text>Description: {data.forecast}</Card.Text>
+            <Card.Text>Date: {data.time}</Card.Text>
           </Card.Body>
         </Card>
       )
