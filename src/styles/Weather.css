@@ -1,0 +1,10 @@
+#weatherCard {
+    width: 300px;
+}
+
+.weatherSection {
+    background-color: teal;
+    color: black;
+    display: flex;
+    flex-direction: row;
+}
