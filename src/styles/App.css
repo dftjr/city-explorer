@@ -1,0 +1,25 @@
+.cityBlock {
+    background-color: teal;
+    color: black;
+    height: 700px;
+    text-align: center;
+}
+
+.weatherBlock {
+    background-color: teal;
+    color: black;
+    height: 700px;
+    text-align: center;
+}
+
+.movieBlock {
+    background-color: teal;
+    color: black;
+    height: 1400px;
+    text-align: center;
+}
+
+.form {
+    background-color: teal;
+    color: black;
+}
